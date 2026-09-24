@@ -1,0 +1,58 @@
+# =====================================================================
+# MALAHIEUDE SYNDIC — configuration Apache (hébergement OVH)
+# Compression, cache navigateur, HTTPS. À placer à la racine du site (www/).
+# =====================================================================
+
+AddDefaultCharset UTF-8
+AddType image/webp .webp
+AddType font/woff2 .woff2
+AddType application/manifest+json .webmanifest
+
+# --- HTTPS + domaine sans www --------------------------------------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} off [OR]
+  RewriteCond %{HTTP_HOST} ^www\. [NC]
+  RewriteRule ^ https://malahieude.fr%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# --- Compression du texte (HTML, CSS, JS, SVG, JSON) ----------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/xml application/javascript text/javascript application/json application/ld+json image/svg+xml application/manifest+json
+</IfModule>
+
+# --- Cache navigateur -----------------------------------------------
+# Les noms de fichiers ne sont pas versionnés : durée modérée pour CSS/JS,
+# plus longue pour images et polices qui changent rarement.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 hour"
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType text/javascript "access plus 1 month"
+  ExpiresByType image/webp "access plus 6 months"
+  ExpiresByType image/jpeg "access plus 6 months"
+  ExpiresByType image/png "access plus 6 months"
+  ExpiresByType image/x-icon "access plus 6 months"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType application/xml "access plus 1 day"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Fichiers de travail à ne pas exposer
+<FilesMatch "^(\.impeccable\.md|build-min\.sh)$">
+  Require all denied
+</FilesMatch>
+
+# llms.txt servi en texte UTF-8
+<Files "llms.txt">
+  ForceType text/plain; charset=utf-8
+</Files>

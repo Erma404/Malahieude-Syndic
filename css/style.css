@@ -628,3 +628,10 @@ h2.label{font-family:var(--text);font-size:13px;line-height:1.6;color:var(--taup
 #faq .faq-more{max-width:none;margin-top:clamp(24px,4.5vh,44px)}
 @media (min-width:1025px) and (max-height:700px){ #faq .faq summary{padding:14px 0} }
 @media (min-width:1025px) and (max-height:700px){ #faq .faq summary{padding:22px 0} }
+
+/* Menu : Espace client et Demander une proposition côte à côte, même taille */
+.nav-ctas{display:grid;grid-template-columns:1fr 1fr;gap:10px;flex:none}
+.nav-ctas .btn{min-height:46px;padding:0 18px;font-size:12px;letter-spacing:.12em;white-space:nowrap}
+.nav-ctas .btn-line{background:transparent;color:var(--navy);border-color:var(--navy)}
+.nav-ctas .btn-line:hover{background:var(--navy);color:var(--on-navy)}
+@media (max-width:1180px){ .nav-ctas{display:none} }

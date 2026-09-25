@@ -635,3 +635,6 @@ h2.label{font-family:var(--text);font-size:13px;line-height:1.6;color:var(--taup
 .nav-ctas .btn-line{background:transparent;color:var(--navy);border-color:var(--navy)}
 .nav-ctas .btn-line:hover{background:var(--navy);color:var(--on-navy)}
 @media (max-width:1180px){ .nav-ctas{display:none} }
+/* Espace client : largeur ajustée à son texte (même hauteur et même style que l'autre bouton) */
+.nav-ctas{display:flex;align-items:center;gap:10px}
+.nav-ctas .btn{width:auto}

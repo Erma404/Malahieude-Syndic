@@ -2,3 +2,8 @@
 node_modules/
 .vercel
 .env*
+
+# Livrables client (exports autonomes) : non publiés sur le site
+export/
+# Photos sources non optimisées
+assets/*.jpeg

@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "malahieude-syndic.vercel.app" }],
+      "destination": "https://www.malahieude.fr/:path*",
+      "permanent": true
+    }
+  ]
+}

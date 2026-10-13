@@ -638,3 +638,31 @@ h2.label{font-family:var(--text);font-size:13px;line-height:1.6;color:var(--taup
 /* Espace client : largeur ajustée à son texte (même hauteur et même style que l'autre bouton) */
 .nav-ctas{display:flex;align-items:center;gap:10px}
 .nav-ctas .btn{width:auto}
+
+/* =====================================================================
+   Passe de finition
+   ===================================================================== */
+.nobr{white-space:nowrap}
+/* Devise du Cabinet : lignes équilibrées, pas de mot orphelin */
+.motto{text-wrap:balance}
+h1,h2,h3{text-wrap:balance}
+.lead,.faq-answer p,.about-text p{text-wrap:pretty}
+@media (max-width:640px){
+  /* Libellés de section : sur une ligne, filet d'attaque seulement */
+  .label{letter-spacing:.2em;gap:10px}
+  .label::before{width:20px}
+  .label::after{display:none}
+  /* Convictions du Cabinet : grille 2 × 2, sans points de séparation */
+  .convictions{display:grid;grid-template-columns:1fr 1fr;gap:6px 16px}
+  .convictions li + li::before{display:none}
+  .convictions li{white-space:normal}
+}
+.about-text .motto{text-wrap:balance}
+.about-text .motto{width:fit-content;max-width:100%}
+.about-text .motto{max-width:min(100%,23em)}
+
+/* Hero : portrait du gérant en premier visuel ; scène d'assemblée dans le médaillon du Cabinet */
+.arch-frame img.hero-portrait{object-position:50% 22%}
+.medallion-scene img{object-position:62% 50%}
+/* Mobile : pas de visuel dans la hero */
+@media (max-width:640px){ .hero .arch{display:none} }

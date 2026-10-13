@@ -27,4 +27,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://malahieude.fr/sitemap.xml
+Sitemap: https://www.malahieude.fr/sitemap.xml

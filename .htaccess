@@ -8,12 +8,12 @@ AddType image/webp .webp
 AddType font/woff2 .woff2
 AddType application/manifest+json .webmanifest
 
-# --- HTTPS + domaine sans www --------------------------------------
+# --- HTTPS + domaine avec www --------------------------------------
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteCond %{HTTPS} off [OR]
-  RewriteCond %{HTTP_HOST} ^www\. [NC]
-  RewriteRule ^ https://malahieude.fr%{REQUEST_URI} [L,R=301]
+  RewriteCond %{HTTP_HOST} !^www\. [NC]
+  RewriteRule ^ https://www.malahieude.fr%{REQUEST_URI} [L,R=301]
 </IfModule>
 
 # --- Compression du texte (HTML, CSS, JS, SVG, JSON) ----------------

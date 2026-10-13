@@ -25,4 +25,4 @@
 
 - [Site MALAHIEUDE SYNDIC](https://www.malahieude.fr/) : présentation du cabinet, services, méthode, FAQ et contact.
 - [Espace client](https://malahieude-syndic.immoscope.fr) : espace personnel des copropriétaires gérés par le cabinet.
-- [Mentions légales](https://www.malahieude.fr/mentions-legales.html) : éditeur, activité réglementée (loi Hoguet), garantie financière, assurance, médiateur de la consommation, hébergeur.
+- [Mentions légales](https://www.malahieude.fr/mentions-legales.html) : éditeur, activité réglementée (loi Hoguet), garantie financière, médiateur de la consommation, hébergeur.

@@ -1,9 +1,11 @@
 // Fonction Vercel : reçoit le formulaire « Demander une proposition » et envoie
-// (1) la demande au cabinet, (2) une confirmation au visiteur, via Resend.
-// Variables d'environnement requises : RESEND_API_KEY ; optionnelles : MAIL_TO, MAIL_FROM.
+// (1) la demande au cabinet, (2) une confirmation au visiteur, via SMTP (boîte mail du cabinet).
+// Variables d'environnement requises : SMTP_HOST, SMTP_USER, SMTP_PASS ;
+// optionnelles : SMTP_PORT (465 par défaut), MAIL_TO, MAIL_FROM.
+const nodemailer = require('nodemailer');
 
 const TO = process.env.MAIL_TO || 'contact@malahieude.fr';
-const FROM = process.env.MAIL_FROM || 'MALAHIEUDE SYNDIC <contact@malahieude.fr>';
+const FROM = process.env.MAIL_FROM || `MALAHIEUDE SYNDIC <${process.env.SMTP_USER || 'contact@malahieude.fr'}>`;
 const ORIGINS = ['https://www.malahieude.fr', 'https://malahieude.fr'];
 
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -21,13 +23,15 @@ const LABELS = [
   ['telephone', 'Téléphone'],
 ];
 
-async function send(payload) {
-  const r = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
+let transport;
+function send({ from, to, reply_to, subject, html, text }) {
+  transport = transport || nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: Number(process.env.SMTP_PORT || 465),
+    secure: Number(process.env.SMTP_PORT || 465) === 465,
+    auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
   });
-  if (!r.ok) throw new Error(`Resend ${r.status}`);
+  return transport.sendMail({ from, to, replyTo: reply_to, subject, html, text });
 }
 
 module.exports = async (req, res) => {
@@ -47,7 +51,7 @@ module.exports = async (req, res) => {
   if (!d.adresse || !d.nom || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) {
     return res.status(400).json({ error: 'Champs obligatoires manquants ou invalides' });
   }
-  if (!process.env.RESEND_API_KEY) return res.status(500).json({ error: 'Envoi non configuré' });
+  if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASS) return res.status(500).json({ error: 'Envoi non configuré' });
 
   const rows = LABELS.filter(([k]) => d[k]);
   const table = rows.map(([k, l]) =>

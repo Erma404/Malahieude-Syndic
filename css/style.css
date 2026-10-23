@@ -664,8 +664,8 @@ h1,h2,h3{text-wrap:balance}
 /* Hero : portrait du gérant en premier visuel ; scène d'assemblée dans le médaillon du Cabinet */
 .arch-frame img.hero-portrait{object-position:50% 22%}
 .medallion-scene img{object-position:62% 50%}
-/* Mobile : pas de visuel dans la hero */
-@media (max-width:640px){ .hero .arch{display:none} }
+/* Mobile : portrait du gérant sous le texte de la hero */
+@media (max-width:640px){ .hero .arch{width:min(100%,300px);height:auto;min-height:0;aspect-ratio:4/5;margin-top:var(--space-lg)} .arch-frame img.hero-portrait{object-position:50% 20%} }
 
 /* Formulaire de demande de proposition : stepper horizontal */
 .req{display:grid;gap:var(--space-lg)}
